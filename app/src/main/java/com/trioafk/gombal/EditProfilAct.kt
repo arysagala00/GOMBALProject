@@ -84,22 +84,41 @@ class EditProfilAct : AppCompatActivity() {
             btn_save_profile.isEnabled = false
             btn_save_profile.text = "Loading ..."
 
-            reference.addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    dataSnapshot.ref.child("username").setValue(xusername.text.toString())
-                    dataSnapshot.ref.child("password").setValue(xpassword.text.toString())
-                    dataSnapshot.ref.child("bio").setValue(xbio.text.toString())
-                    dataSnapshot.ref.child("nama_lengkap").setValue(xnama_lengkap.text.toString())
-                    dataSnapshot.ref.child("email_address").setValue(xemail_address.text.toString())
-                }
+            if(photo_location==null){
+                reference.addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        dataSnapshot.ref.child("username").setValue(xusername.text.toString())
+                        dataSnapshot.ref.child("password").setValue(xpassword.text.toString())
+                        dataSnapshot.ref.child("bio").setValue(xbio.text.toString())
+                        dataSnapshot.ref.child("nama_lengkap").setValue(xnama_lengkap.text.toString())
+                        dataSnapshot.ref.child("email_address").setValue(xemail_address.text.toString())
+                    }
 
-                override fun onCancelled(databaseError: DatabaseError) {
+                    override fun onCancelled(databaseError: DatabaseError) {
 
-                }
-            })
+                    }
+                })
 
+                val gotobackrprofile = Intent(baseContext, MyProfileAct::class.java)
+                startActivity(gotobackrprofile)
+                finish()
+            }
 
-            if (photo_location != null) {
+            else if(photo_location!=null){
+                reference.addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        dataSnapshot.ref.child("username").setValue(xusername.text.toString())
+                        dataSnapshot.ref.child("password").setValue(xpassword.text.toString())
+                        dataSnapshot.ref.child("bio").setValue(xbio.text.toString())
+                        dataSnapshot.ref.child("nama_lengkap").setValue(xnama_lengkap.text.toString())
+                        dataSnapshot.ref.child("email_address").setValue(xemail_address.text.toString())
+                    }
+
+                    override fun onCancelled(databaseError: DatabaseError) {
+
+                    }
+                })
+
                 val storageReference1 = storage.child(
                     System.currentTimeMillis().toString() + "." + getFileExtension(photo_location!!)
                 )
@@ -108,11 +127,13 @@ class EditProfilAct : AppCompatActivity() {
                         val uri_photo = uri.toString()
                         reference.ref.child("url_photo_profile").setValue(uri_photo)
                     }.addOnCompleteListener {
-                        val gotobackrprofile = Intent(this@EditProfilAct, MyProfileAct::class.java)
+                        val gotobackrprofile = Intent(baseContext, MyProfileAct::class.java)
                         startActivity(gotobackrprofile)
                         finish()
                     }
-                }.addOnCompleteListener { }
+                }.addOnCompleteListener {
+
+                }
             }
         }
 

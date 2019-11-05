@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "712505707713",
+    "firebase_url": "https://gombal-prokect.firebaseio.com",
+    "project_id": "gombal-prokect",
+    "storage_bucket": "gombal-prokect.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:712505707713:android:91354f215fce79981b5840",
+        "android_client_info": {
+          "package_name": "com.trioafk.gombal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "712505707713-3j737r92a1ud5umevi8jnhtoode7t90n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.trioafk.gombal",
+            "certificate_hash": "abab1e4ab3b983ec9797fde9bcd20c379f9b428a"
+          }
+        },
+        {
+          "client_id": "712505707713-sm0j95e42q2glkb3k1r65lrqb6ofmgqo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAxrXCY4cU6DV-_kWefXgy06H8Au7F4EmA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "712505707713-sm0j95e42q2glkb3k1r65lrqb6ofmgqo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

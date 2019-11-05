@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">GOMBAL</string>
+    <string name="slogan">Selalu Ada Jalan</string>
+    <string name="signin">SIGN IN</string>
+    <string name="password_label">Password</string>
+    <string name="username_label">Username</string>
+    <string name="next">CONTINUE</string>
+    <string name="email_label">Email Address</string>
+    <string name="bio">Bio</string>
+    <string name="name_label">Name</string>
+    <string name="explore">EXPLORE NOW</string>
+    <string name="edit_profile_label">EDIT PROFIL</string>
+    <string name="sign_out_label">SIGN OUT</string>
+    <string name="save_profile_label">SAVE PROFILE</string>
+</resources>

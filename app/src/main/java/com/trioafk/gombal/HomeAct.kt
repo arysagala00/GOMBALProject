@@ -14,6 +14,7 @@ import com.squareup.picasso.Picasso
 class HomeAct : AppCompatActivity() {
 
     lateinit var reference: DatabaseReference
+    lateinit var reference1: DatabaseReference
 
     lateinit var photo_home_user:ImageView
     lateinit var nama_lengkap:TextView
@@ -36,21 +37,26 @@ class HomeAct : AppCompatActivity() {
         btn_to_profile = findViewById(R.id.btn_to_profile)
 
         reference = FirebaseDatabase.getInstance().getReference().child("Users").child(username_key_new!!)
+        reference1 = FirebaseDatabase.getInstance().getReference().child("url_photo")
 
         reference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 nama_lengkap.setText(dataSnapshot.child("nama_lengkap").value!!.toString())
                 bio.setText(dataSnapshot.child("bio").value!!.toString())
+                    Picasso.with(this@HomeAct)
+                        .load(dataSnapshot.child("url_photo_profile").value!!.toString())
+                        .centerCrop()
+                        .fit().into(photo_home_user)
 
-                Picasso.with(this@HomeAct)
-                    .load(dataSnapshot.child("url_photo_profile").value!!.toString()).centerCrop()
-                    .fit().into(photo_home_user)
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
 
             }
         })
+
+
+
 
         btn_to_profile.setOnClickListener(){
             val gotoprofile = Intent(this@HomeAct, MyProfileAct::class.java)

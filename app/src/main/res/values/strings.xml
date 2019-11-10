@@ -12,4 +12,6 @@
     <string name="edit_profile_label">EDIT PROFIL</string>
     <string name="sign_out_label">SIGN OUT</string>
     <string name="save_profile_label">SAVE PROFILE</string>
+
+    <string name="google_maps_key">AIzaSyAOa6INTpsieplLKRbLpZlbMuJm3zM6sn4</string>
 </resources>

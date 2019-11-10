@@ -6,15 +6,16 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.webkit.MimeTypeMap
+import android.widget.Toast
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.gms.tasks.Task
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_register_one.*
 import kotlinx.android.synthetic.main.activity_register_two.*
 
 class RegisterTwoAct : AppCompatActivity() {
@@ -54,6 +55,7 @@ class RegisterTwoAct : AppCompatActivity() {
 
             //validasi untuk file, apakah ada atau tidak
             if (photo_location != null) {
+
                 val storageReference1 = storage.child(System.currentTimeMillis().toString() + "." + getFileExtension(photo_location)
                 )
                 storageReference1.putFile(photo_location).addOnSuccessListener {
@@ -67,13 +69,13 @@ class RegisterTwoAct : AppCompatActivity() {
                             Intent(this@RegisterTwoAct, SuccessRegisterAct::class.java)
                         startActivity(gotosuccess)
                     }
-                }.addOnCompleteListener { }
+                }.addOnCompleteListener {}
             }
         }
     }
 
     fun findPhoto(){
-        val pic:Intent = Intent()
+        val pic = Intent()
         pic.setType("image/*")
         pic.setAction(Intent.ACTION_GET_CONTENT)
         startActivityForResult(pic,photo_max)

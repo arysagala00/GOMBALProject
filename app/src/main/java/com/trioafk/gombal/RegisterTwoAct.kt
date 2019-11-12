@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.activity_register_two.*
 
 class RegisterTwoAct : AppCompatActivity() {
 
-    lateinit var photo_location:Uri
+    var photo_location:Uri?=null
     var photo_max: Int = 1
 
     lateinit var reference: DatabaseReference
@@ -54,22 +54,51 @@ class RegisterTwoAct : AppCompatActivity() {
             storage = FirebaseStorage.getInstance().getReference().child("Photousers").child(username_key_new!!)
 
             //validasi untuk file, apakah ada atau tidak
-            if (photo_location != null) {
+            if(photo_location==null){
+                reference.addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        dataSnapshot.ref.child("url_photo_profile").setValue("https://firebasestorage.googleapis.com/v0/b/gombal-prokect.appspot.com/o/icon_nopic.png?alt=media&token=4dfe047b-776e-4440-ac69-f9327d4c9d82")
+                        dataSnapshot.ref.child("nama_lengkap").setValue(nama_lengkap.text.toString())
+                        dataSnapshot.ref.child("bio").setValue(bio.text.toString())
+                    }
 
-                val storageReference1 = storage.child(System.currentTimeMillis().toString() + "." + getFileExtension(photo_location)
+                    override fun onCancelled(databaseError: DatabaseError) {
+
+                    }
+                })
+
+                val gotosuccess = Intent(this@RegisterTwoAct, SuccessRegisterAct::class.java)
+                startActivity(gotosuccess)
+                finish()
+            }
+
+            else if(photo_location!=null){
+                reference.addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        dataSnapshot.ref.child("nama_lengkap").setValue(nama_lengkap.text.toString())
+                        dataSnapshot.ref.child("bio").setValue(bio.text.toString())
+                    }
+
+                    override fun onCancelled(databaseError: DatabaseError) {
+
+                    }
+                })
+
+                val storageReference1 = storage.child(
+                    System.currentTimeMillis().toString() + "." + getFileExtension(photo_location!!)
                 )
-                storageReference1.putFile(photo_location).addOnSuccessListener {
+                storageReference1.putFile(photo_location!!).addOnSuccessListener {
                     storageReference1.downloadUrl.addOnSuccessListener { uri ->
                         val uri_photo = uri.toString()
                         reference.ref.child("url_photo_profile").setValue(uri_photo)
-                        reference.ref.child("nama_lengkap").setValue(nama_lengkap.text.toString())
-                        reference.ref.child("bio").setValue(bio.text.toString())
                     }.addOnCompleteListener {
-                        val gotosuccess =
-                            Intent(this@RegisterTwoAct, SuccessRegisterAct::class.java)
+                        val gotosuccess = Intent(this@RegisterTwoAct, SuccessRegisterAct::class.java)
                         startActivity(gotosuccess)
+                        finish()
                     }
-                }.addOnCompleteListener {}
+                }.addOnCompleteListener {
+
+                }
             }
         }
     }

@@ -5,11 +5,13 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.github.florent37.shapeofview.shapes.CircleView
 import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeAct : AppCompatActivity() {
 
@@ -20,6 +22,7 @@ class HomeAct : AppCompatActivity() {
     lateinit var nama_lengkap:TextView
     lateinit var bio:TextView
     lateinit var btn_to_profile:CircleView
+    lateinit var gotomap:Button
 
     var USERNAME_KEY = "usernamekey"
     var username_key = ""
@@ -35,6 +38,7 @@ class HomeAct : AppCompatActivity() {
         bio = findViewById(R.id.bio)
         photo_home_user = findViewById(R.id.photo_home_user)
         btn_to_profile = findViewById(R.id.btn_to_profile)
+
 
         reference = FirebaseDatabase.getInstance().getReference().child("Users").child(username_key_new!!)
         reference1 = FirebaseDatabase.getInstance().getReference().child("url_photo")
@@ -56,11 +60,14 @@ class HomeAct : AppCompatActivity() {
         })
 
 
-
-
         btn_to_profile.setOnClickListener(){
             val gotoprofile = Intent(this@HomeAct, MyProfileAct::class.java)
             startActivity(gotoprofile)
+        }
+
+        btnMaps.setOnClickListener(){
+            val maps = Intent(this@HomeAct, MapsActivity::class.java)
+            startActivity(maps)
         }
 
     }

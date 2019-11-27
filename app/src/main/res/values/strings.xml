@@ -13,5 +13,8 @@
     <string name="sign_out_label">SIGN OUT</string>
     <string name="save_profile_label">SAVE PROFILE</string>
 
-    <string name="google_maps_key">AIzaSyAOa6INTpsieplLKRbLpZlbMuJm3zM6sn4</string>
+    <string name="google_maps_key">AIzaSyAGO34ygu8DJKdvoSkrnzuhPAaC2p78JAA</string>
+    <string name="title_activity_maps">Gombal\'s Map</string>
+    <string name="cari">CARI</string>
+
 </resources>

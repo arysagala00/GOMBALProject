@@ -21,9 +21,9 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="81dp"
+        android:layout_marginStart="60dp"
         android:layout_marginTop="24dp"
-        android:layout_marginEnd="81dp"
+        android:layout_marginEnd="91dp"
         android:fontFamily="@font/mregular"
         android:text="Fill Up Your Profile"
         android:textAlignment="center"
@@ -182,7 +182,7 @@
 
     <Button
         android:id="@+id/btn_continue_dua"
-        android:layout_width="250dp"
+        android:layout_width="200dp"
         android:layout_height="55dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"

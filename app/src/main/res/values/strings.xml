@@ -16,5 +16,10 @@
     <string name="google_maps_key">AIzaSyAGO34ygu8DJKdvoSkrnzuhPAaC2p78JAA</string>
     <string name="title_activity_maps">Gombal\'s Map</string>
     <string name="cari">CARI</string>
+    <string name="order">ORDER</string>
+    <string name="pay_label">PAY</string>
+    <string name="dashboard_label">MY DASHBOARD</string>
+    <string name="save_wallet">SAVE</string>
+    <string name="nominal">Nominal</string>
 
 </resources>

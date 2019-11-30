@@ -1,5 +1,6 @@
 package com.trioafk.gombal
 
+import android.content.Intent
 import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -35,6 +36,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+        btn_back_home.setOnClickListener(){onBackPressed()}
     }
 
     /**
@@ -126,5 +129,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 val queue = Volley.newRequestQueue(this)
                 queue.add(request)
             }
+    }
+
+    fun showSelectedWorkshop(mapsdata: mapsdata){
+        val goToDetail = Intent(this@MapsActivity,DetailOrder::class.java)
+        goToDetail.putExtra(DetailOrder.name.EXTRA_NAME, mapsdata.nama)
+        startActivity(goToDetail)
     }
 }

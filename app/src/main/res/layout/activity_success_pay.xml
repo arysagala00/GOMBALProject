@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bgPrimary"
-    tools:context=".RegisterOneAct">
+    tools:context=".SuccessPay">
 
     <ImageView
         android:id="@+id/icon_success"
-        android:layout_width="256dp"
-        android:layout_height="300dp"
+        android:layout_width="252dp"
+        android:layout_height="298dp"
         android:layout_marginTop="50dp"
-        android:src="@drawable/icon_success_signup"
+        android:src="@drawable/success"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -21,12 +21,12 @@
         android:id="@+id/app_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="34dp"
+        android:layout_marginTop="16dp"
         android:fontFamily="@font/mregular"
-        android:text="Kamu Hebat"
+        android:text="Selamat"
         android:textAlignment="center"
         android:textColor="@color/blackPrimary"
-        android:textSize="20sp"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/icon_success" />
@@ -38,24 +38,30 @@
         android:layout_marginTop="8dp"
         android:fontFamily="@font/mlight"
         android:lineSpacingExtra="9dp"
-        android:text="Selamat datang pada GOMBAL \ndan nikmati tambal ban tanpa risau"
+        android:text="Nikmati hari dengan \nBan serasa baru"
         android:textAlignment="center"
         android:textColor="@color/grayPrimary"
-        android:textSize="18sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/app_title" />
 
+
+
     <Button
-        android:id="@+id/btn_explore"
-        style="@style/btn_blue_primary"
-        android:layout_marginTop="50dp"
+        android:id="@+id/btn_dashboard"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
         android:layout_marginStart="48dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="48dp"
-        android:text="@string/explore"
+        android:background="@drawable/bg_button_white_primary"
+        android:fontFamily="@font/mmedium"
+        android:text="@string/dashboard_label"
+        android:textColor="@color/grayPrimary"
+        android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/app_subtitle" />
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

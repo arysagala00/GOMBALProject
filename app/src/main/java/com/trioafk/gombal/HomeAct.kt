@@ -3,11 +3,11 @@ package com.trioafk.gombal
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.github.florent37.shapeofview.shapes.CircleView
 import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
@@ -22,7 +22,7 @@ class HomeAct : AppCompatActivity() {
     lateinit var nama_lengkap:TextView
     lateinit var bio:TextView
     lateinit var btn_to_profile:CircleView
-    lateinit var gotomap:Button
+
 
     var USERNAME_KEY = "usernamekey"
     var username_key = ""
@@ -47,6 +47,7 @@ class HomeAct : AppCompatActivity() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 nama_lengkap.setText(dataSnapshot.child("nama_lengkap").value!!.toString())
                 bio.setText(dataSnapshot.child("bio").value!!.toString())
+                user_balance.text = "Rp " + dataSnapshot.child("user_balance").value.toString()
                     Picasso.with(this@HomeAct)
                         .load(dataSnapshot.child("url_photo_profile").value!!.toString())
                         .centerCrop()
@@ -65,9 +66,19 @@ class HomeAct : AppCompatActivity() {
             startActivity(gotoprofile)
         }
 
-        btnMaps.setOnClickListener(){
-            val maps = Intent(this@HomeAct, MapsActivity::class.java)
-            startActivity(maps)
+        btn_profile.setOnClickListener() {
+            val gotoprofile = Intent(this@HomeAct, MyProfileAct::class.java)
+            startActivity(gotoprofile)
+        }
+
+        btn_order.setOnClickListener(){
+            val goToOrder = Intent(this@HomeAct, MapsActivity::class.java)
+            startActivity(goToOrder)
+        }
+
+        btn_wallet.setOnClickListener(){
+            val GoToWallet = Intent(this@HomeAct, Wallet::class.java)
+            startActivity(GoToWallet)
         }
 
     }

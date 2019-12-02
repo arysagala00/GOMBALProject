@@ -133,7 +133,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     fun showSelectedWorkshop(mapsdata: mapsdata){
         val goToDetail = Intent(this@MapsActivity,DetailOrder::class.java)
-        goToDetail.putExtra(DetailOrder.name.EXTRA_NAME, mapsdata.nama)
+        val mBundle = Bundle()
+        mBundle.putString(DetailOrder.EXTRA_NAME, mapsdata.nama)
         startActivity(goToDetail)
     }
 }

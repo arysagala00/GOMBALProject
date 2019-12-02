@@ -6,17 +6,22 @@ import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_detail_order.*
 
 class DetailOrder : AppCompatActivity() {
-    object name{
-        val EXTRA_NAME:String = "EXTRA_NAME"
+
+    var name: String? = null
+
+    companion object {
+        var EXTRA_NAME:String = "EXTRA_NAME"
     }
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_order)
 
-        nama_bengkel.setText(intent.getStringExtra(name.EXTRA_NAME))
+        if(savedInstanceState!=null){
+            val nameFromBundle = savedInstanceState.getString(EXTRA_NAME)
+            name = nameFromBundle
+            nama_bengkel.text = name
+        }
 
         btn_order.setOnClickListener(){
             val goToCheckout = Intent(this@DetailOrder, OrderCheckOut::class.java)

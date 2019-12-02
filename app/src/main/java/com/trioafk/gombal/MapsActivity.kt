@@ -2,32 +2,29 @@ package com.trioafk.gombal
 
 import android.content.Intent
 import android.location.Location
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Looper
-import android.util.Log
-import com.android.volley.Request
-import com.android.volley.Response
-import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.*
-
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.*
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_maps.*
-import org.json.JSONObject
-import android.os.AsyncTask.execute
-import android.os.Handler
-import androidx.recyclerview.widget.LinearLayoutManager
+
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private var marker: Marker? = null
     private var myLoc: Location? = null
+    private var url: String? =null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,8 +65,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     for(location in loc.locations){
                         myLoc = location
                         val myLocation = LatLng(location.latitude, location.longitude)
+                        print("fungsi"+myLoc?.latitude)
+                        url="https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+myLoc?.latitude+","+myLoc?.longitude+"&radius=1500&type=bengkel&keyword=motor&key=AIzaSyDxLLN6ngrM1nR2WJQXoOmHLCZJfM6ysto"
                         if(marker == null){
                             marker = mMap.addMarker(MarkerOptions().position(myLocation).title("Lokasi Saya").icon(
+
                                 BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)
                             ))
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 15.0f))
@@ -84,57 +84,44 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             locationRequest,
             locationCallback,
             Looper.getMainLooper()
+
         )
 
-            val listmaps: ArrayList<mapsdata> = ArrayList<mapsdata>()
-            val mapsadapter = mapsadapter(listmaps,this)
-            val layoutManager = LinearLayoutManager(this)
 
-            place.adapter=mapsadapter
-            place.layoutManager=layoutManager
-            place.setHasFixedSize(true)
 
-            val url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+myLoc?.latitude+","+myLoc?.longitude+"&radius=1500&type=bengkel&keyword=bengkel+motor&key=AIzaSyBEbr-TjCmABy4jXQG2SP58z7V_2_E98VU"
 
-            btn_load.setOnClickListener(){
-                btn_load.isEnabled = false
-                btn_load.setText("Loading ...")
-                val request = StringRequest(
-                    Request.Method.GET,
-                    url,
-                    Response.Listener { res ->
-                        var it = JSONObject(res)
-                        Log.d("JSON",res)
-                        for(i in 0 until it.getJSONArray("results").length()){
-                            val place = it.getJSONArray("results")[i] as JSONObject
-                            val name = place.getString("name")
-                            val latitude = place.getJSONObject("geometry").getJSONObject("location").getDouble("lat")
-                            val longitude = place.getJSONObject("geometry").getJSONObject("location").getDouble("lng")
-                            val loc = LatLng(latitude, longitude)
-                            var buka:String;
-                            if(place.getJSONObject("opening_hours").getBoolean("open_now")){
-                                buka="Buka"
-                            }else{
-                                buka="Tutup"
-                            }
-                            listmaps.add(mapsdata(name,buka,place.getString("rating")))
-                            mMap.addMarker(MarkerOptions().position(loc).title(name))
-                        }
-                        mapsadapter.notifyDataSetChanged()
-                    },
-                    Response.ErrorListener {
+            btn_load.setOnClickListener {
+                val listmaps: ArrayList<mapsdata> = ArrayList<mapsdata>()
+                val mapsadapter=mapsadapter(listmaps,this)
+                val layoutmanager=LinearLayoutManager(this)
+                place.adapter=mapsadapter
+                place.layoutManager=layoutmanager
+                place.setHasFixedSize(true)
+                mMap.addMarker(MarkerOptions().position(
+                    LatLng(-7.776772899999999,110.3816376
+                )).title("Mozes Motor"))
+                listmaps.add(mapsdata("Mozes Motor","Jl. Colombo No. 3, Samirono, Karang Malang, Caturtunggal, Kota Yogyakarta","4.4"))
+                mMap.addMarker(MarkerOptions().position(
+                    LatLng(-7.788647999999999,110.378261
+                    )).title("Anda Motor"))
+                listmaps.add(mapsdata("Anda Motor","Jl. Dr. Wahidin Sudirohusodo No.1 A, Klitren, Kota Yogyakarta","4.4"))
+                mapsadapter.notifyDataSetChanged()
 
-                    })
 
-                val queue = Volley.newRequestQueue(this)
-                queue.add(request)
+
+                mapsadapter.setOnItemClickCallback(object : mapsadapter.OnItemClickCallback {
+                    override fun onItemClicked(data: mapsdata?) {
+                        showSelectedWorkshop(data!!)
+                    }
+                })
             }
     }
 
+
+
     fun showSelectedWorkshop(mapsdata: mapsdata){
         val goToDetail = Intent(this@MapsActivity,DetailOrder::class.java)
-        val mBundle = Bundle()
-        mBundle.putString(DetailOrder.EXTRA_NAME, mapsdata.nama)
+        goToDetail.putExtra(DetailOrder.EXTRA_NAME, mapsdata.nama)
         startActivity(goToDetail)
     }
 }

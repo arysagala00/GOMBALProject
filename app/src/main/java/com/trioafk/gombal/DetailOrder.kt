@@ -17,11 +17,8 @@ class DetailOrder : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_order)
 
-        if(savedInstanceState!=null){
-            val nameFromBundle = savedInstanceState.getString(EXTRA_NAME)
-            name = nameFromBundle
-            nama_bengkel.text = name
-        }
+        val nama:String? = intent.getStringExtra(EXTRA_NAME)
+        nama_bengkel.setText(nama)
 
         btn_order.setOnClickListener(){
             val goToCheckout = Intent(this@DetailOrder, OrderCheckOut::class.java)

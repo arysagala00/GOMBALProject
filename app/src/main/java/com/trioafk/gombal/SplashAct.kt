@@ -6,11 +6,14 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import kotlinx.android.synthetic.main.activity_splash.*
 
 class SplashAct : AppCompatActivity() {
+
+    private var i = 0
 
     lateinit var app_splash:Animation
     lateinit var btt:Animation
@@ -42,6 +45,24 @@ class SplashAct : AppCompatActivity() {
             //setting timer untuk 2 detik
             val handler = Handler()
             handler.postDelayed({
+
+                i = pBar!!.progress
+                Thread(Runnable {
+                    while (i < 15) {
+                        i ++
+                        // Update the progress bar and display the current value
+                        handler.post(Runnable {
+                            pBar!!.progress = i
+                        })
+                        try {
+                            Thread.sleep(100)
+                        } catch (e: InterruptedException) {
+                            e.printStackTrace()
+                        }
+
+                    }
+                }).start()
+
                 //ganti activity
                 val gogetstarted = Intent(this@SplashAct, GetStartedAct::class.java)
                 startActivity(gogetstarted)
@@ -51,11 +72,29 @@ class SplashAct : AppCompatActivity() {
             //setting timer untuk 2 detik
             val handler = Handler()
             handler.postDelayed({
+
+                i = pBar!!.progress
+                Thread(Runnable {
+                    while (i < 15) {
+                        i ++
+                        // Update the progress bar and display the current value
+                        handler.post(Runnable {
+                            pBar!!.progress = i
+                        })
+                        try {
+                            Thread.sleep(100)
+                        } catch (e: InterruptedException) {
+                            e.printStackTrace()
+                        }
+
+                    }
+                }).start()
+
                 //ganti activity
                 val gotohome = Intent(this@SplashAct, HomeAct::class.java)
                 startActivity(gotohome)
                 finish()
-            }, 2000)
+            }, 1000)
         }
     }
 }

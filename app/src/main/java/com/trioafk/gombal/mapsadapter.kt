@@ -1,15 +1,17 @@
 package com.trioafk.gombal
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 
 class mapsadapter(val isimaps: List<mapsdata>, context: Context):RecyclerView.Adapter<mapsadapter.mapsHolder>() {
-
+    var lempar=context
     private var onItemClickCallback: OnItemClickCallback? = null
 
 
@@ -31,8 +33,16 @@ class mapsadapter(val isimaps: List<mapsdata>, context: Context):RecyclerView.Ad
         holder.nama?.text=mapspos.nama
         holder.status?.text=mapspos.address
         holder.rating?.text=mapspos.rating
-    }
+        holder.nama?.setOnClickListener(){
+            showSelectedWorkshop(holder.nama?.text.toString())
+        }
 
+    }
+    fun showSelectedWorkshop(nama: String){
+        val goToDetail = Intent(lempar,DetailOrder::class.java)
+        goToDetail.putExtra(DetailOrder.EXTRA_NAME, nama)
+        lempar.startActivity(goToDetail)
+    }
     class mapsHolder(val view: View):RecyclerView.ViewHolder(view){
         var nama: TextView?     =null
         var status: TextView?   =null
@@ -43,7 +53,12 @@ class mapsadapter(val isimaps: List<mapsdata>, context: Context):RecyclerView.Ad
             nama=view.findViewById(R.id.namatxt) as TextView
             status=view.findViewById(R.id.statustxt) as TextView
             rating=view.findViewById(R.id.rating) as TextView
+
+
+
+
         }
+
 
         fun mapsHolder(item: View) {
             super.itemView

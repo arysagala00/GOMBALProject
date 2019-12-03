@@ -3,10 +3,17 @@ package com.trioafk.gombal
 import android.content.Intent
 import android.location.Location
 import android.os.Bundle
+import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -17,6 +24,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_maps.*
+import org.json.JSONObject
 
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -91,30 +99,56 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
             btn_load.setOnClickListener {
-                val listmaps: ArrayList<mapsdata> = ArrayList<mapsdata>()
-                val mapsadapter=mapsadapter(listmaps,this)
-                val layoutmanager=LinearLayoutManager(this)
-                place.adapter=mapsadapter
-                place.layoutManager=layoutmanager
-                place.setHasFixedSize(true)
-                mMap.addMarker(MarkerOptions().position(
-                    LatLng(-7.776772899999999,110.3816376
-                )).title("Mozes Motor"))
-                listmaps.add(mapsdata("Mozes Motor","Jl. Colombo No. 3, Samirono, Karang Malang, Caturtunggal, Kota Yogyakarta","4.4"))
-                mMap.addMarker(MarkerOptions().position(
-                    LatLng(-7.788647999999999,110.378261
-                    )).title("Anda Motor"))
-                listmaps.add(mapsdata("Anda Motor","Jl. Dr. Wahidin Sudirohusodo No.1 A, Klitren, Kota Yogyakarta","4.4"))
-                mapsadapter.notifyDataSetChanged()
 
+                btn_load.setText("Loading ...")
+                btn_load.isEnabled = false
 
+                val handler = Handler()
+                handler.postDelayed({
+                    val listkita: ArrayList<mapsdata> = ArrayList<mapsdata>()
+                    val ChatAdapter = mapsadapter(listkita,this)
+                    val layoutManager = LinearLayoutManager(this)
 
-                mapsadapter.setOnItemClickCallback(object : mapsadapter.OnItemClickCallback {
-                    override fun onItemClicked(data: mapsdata?) {
-                        showSelectedWorkshop(data!!)
-                    }
-                })
+                    tot.adapter = ChatAdapter
+                    tot.layoutManager = layoutManager
+                    tot.setHasFixedSize(true)
+
+                    val url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+myLoc?.latitude+","+myLoc?.longitude+"&radius=1500&type=bengkel&keyword=Motor&key=AIzaSyCy0lI0n2UW3htLzg50jgz3_l67yvanZ-w"
+//              print("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+myLoc?.latitude+","+myLoc?.longitude+"&radius=1500&type=bengkel&keyword="+edtSearch.text+"&key=AIzaSyDxLLN6ngrM1nR2WJQXoOmHLCZJfM6ysto")
+                    val request = StringRequest(
+                        Request.Method.GET,
+                        url,
+                        Response.Listener { res ->
+                            var it = JSONObject(res)
+                            Log.d("JSON",res)
+                            for(i in 0 until it.getJSONArray("results").length()){
+                                val place = it.getJSONArray("results")[i] as JSONObject
+                                val name = place.getString("name")
+                                val latitude = place.getJSONObject("geometry").getJSONObject("location").getDouble("lat")
+                                val longitude = place.getJSONObject("geometry").getJSONObject("location").getDouble("lng")
+                                val loc = LatLng(latitude, longitude)
+
+                                mMap.addMarker(MarkerOptions().position(loc).title(name))
+                                var alamat: String = place.getString("vicinity")
+                                var rating: String = place.getString("rating")
+                                listkita.add(mapsdata(name,alamat,rating))
+                            }
+                            ChatAdapter.notifyDataSetChanged()
+                        },
+                        Response.ErrorListener {
+
+                        })
+
+                    val queue = Volley.newRequestQueue(this)
+                    queue.add(request)
+
+                    btn_load.text = "CARI"
+                    btn_load.isEnabled = true
+
+                }, 2000)
+
             }
+
     }
 
 

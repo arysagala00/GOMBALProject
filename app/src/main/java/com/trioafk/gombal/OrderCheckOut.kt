@@ -1,6 +1,7 @@
 package com.trioafk.gombal
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
@@ -20,7 +21,8 @@ class OrderCheckOut : AppCompatActivity() {
     var valueTotalHarga: Int = 0
     var sisa_balance = 0
     var valuehargaBan: Int = 10000
-    var notice_uang: ImageView? = null
+
+
 
     var reference: DatabaseReference? = null
     var reference2:DatabaseReference? = null
@@ -35,9 +37,10 @@ class OrderCheckOut : AppCompatActivity() {
 
         textjumlahtiket.setText(valueJumlahBan.toString())
 
-        btnmines.animate().alpha(0f).setDuration(300).start()
+        btnmines.setVisibility(View.GONE)
         btnmines.isEnabled = false
-        notice_uang?.visibility = View.GONE
+        notice_uang.visibility = View.GONE
+
 
         //mengambil data user dari firebase
         //mengambil data user dari firebase
@@ -60,16 +63,17 @@ class OrderCheckOut : AppCompatActivity() {
             valueJumlahBan += 1
             textjumlahtiket.setText(valueJumlahBan.toString())
             if (valueJumlahBan > 1) {
-                btnmines.animate().alpha(1f).setDuration(300).start()
+                btnmines.setVisibility(View.VISIBLE)
                 btnmines.isEnabled = true
             }
-            valueTotalHarga = valueJumlahBan * valueJumlahBan
-            texttotalharga.text = "Rp "+valueTotalHarga
+            valueTotalHarga = valueJumlahBan * valuehargaBan
+            texttotalharga.setText("Rp "+valueTotalHarga)
             if (valueTotalHarga > myBalance) {
                 btn_pay_ticket.animate().translationY(250f).alpha(0f).setDuration(350).start()
+                notice_uang.visibility = View.VISIBLE
                 btn_pay_ticket.isEnabled = false
                 textMyBalance.setTextColor(Color.parseColor("#D1206B"))
-                notice_uang!!.visibility = View.VISIBLE
+
             }
         }
 
@@ -77,16 +81,16 @@ class OrderCheckOut : AppCompatActivity() {
             valueJumlahBan -= 1
             textjumlahtiket.setText(valueJumlahBan.toString())
                 if (valueJumlahBan < 2) {
-                    btnmines.animate().alpha(0f).setDuration(300).start()
+                    btnmines.setVisibility(View.INVISIBLE)
                     btnmines.isEnabled = false
                 }
-            valueTotalHarga = valueJumlahBan * valueJumlahBan
-            texttotalharga.text = "Rp "+valueTotalHarga
+            valueTotalHarga = valuehargaBan * valueJumlahBan
+            texttotalharga.setText("Rp "+valueTotalHarga)
                 if (valueTotalHarga < myBalance) {
                     btn_pay_ticket.animate().translationY(0f).alpha(1f).setDuration(350).start()
+                    notice_uang.visibility = View.GONE
                     btn_pay_ticket.isEnabled = true
                     textMyBalance.setTextColor(Color.parseColor("#203DD1"))
-                    notice_uang!!.visibility = View.GONE
                 }
         }
 
@@ -98,6 +102,9 @@ class OrderCheckOut : AppCompatActivity() {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     sisa_balance = myBalance - valueTotalHarga
                     reference2!!.getRef().child("user_balance").setValue(sisa_balance)
+                    val gotosuccesspay = Intent(this@OrderCheckOut, SuccessPay::class.java)
+                    startActivity(gotosuccesspay)
+                    finish()
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {}

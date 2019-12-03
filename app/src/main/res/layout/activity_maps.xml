@@ -56,7 +56,7 @@
             android:background="#EDEDED" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/place"
+            android:id="@+id/tot"
             android:layout_width="match_parent"
             android:layout_height="150dp">
 

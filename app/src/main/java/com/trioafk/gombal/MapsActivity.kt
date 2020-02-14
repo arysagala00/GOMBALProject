@@ -74,7 +74,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                         myLoc = location
                         val myLocation = LatLng(location.latitude, location.longitude)
                         print("fungsi"+myLoc?.latitude)
-                        url="https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+myLoc?.latitude+","+myLoc?.longitude+"&radius=1500&type=bengkel&keyword=motor&key=AIzaSyDxLLN6ngrM1nR2WJQXoOmHLCZJfM6ysto"
+                        url="https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+myLoc?.latitude+","+myLoc?.longitude+"&radius=1500&type=bengkel&keyword=motor&key="
                         if(marker == null){
                             marker = mMap.addMarker(MarkerOptions().position(myLocation).title("Lokasi Saya").icon(
 
@@ -113,8 +113,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     tot.layoutManager = layoutManager
                     tot.setHasFixedSize(true)
 
-                    val url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+myLoc?.latitude+","+myLoc?.longitude+"&radius=1500&type=bengkel&keyword=Motor&key=AIzaSyCy0lI0n2UW3htLzg50jgz3_l67yvanZ-w"
-//              print("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+myLoc?.latitude+","+myLoc?.longitude+"&radius=1500&type=bengkel&keyword="+edtSearch.text+"&key=AIzaSyDxLLN6ngrM1nR2WJQXoOmHLCZJfM6ysto")
+                    val url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+myLoc?.latitude+","+myLoc?.longitude+"&radius=1500&type=bengkel&keyword=Motor&key="
+//              print("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+myLoc?.latitude+","+myLoc?.longitude+"&radius=1500&type=bengkel&keyword="+edtSearch.text+"&key=")
                     val request = StringRequest(
                         Request.Method.GET,
                         url,
